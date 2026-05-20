@@ -1,21 +1,31 @@
 import React from 'react';
 
-const GroupCard = ({ icon, title, summary }) => {
+const GroupCard = ({ icon, title, summary, budget, active, accent, onClick }) => {
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 w-64 border border-gray-200 hover:shadow-lg transition-shadow">
-      {/* Icon Area */}
-      <div className="text-4xl mb-4 bg-blue-50 w-16 h-16 flex items-center justify-center rounded-full">
-        {icon}
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group flex w-full flex-col justify-between rounded-3xl border px-5 py-6 text-left transition-all duration-300 hover:-translate-y-1 hover:ring-1 hover:ring-cyan-400/40 ${
+        active
+          ? 'border-cyan-400/60 bg-slate-900/90 shadow-[0_20px_60px_-30px_rgba(56,189,248,0.9)]'
+          : 'border-white/10 bg-slate-950/70'
+      }`}
+    >
+      <div className="flex items-center gap-4">
+        <div className={`flex h-14 w-14 items-center justify-center rounded-3xl bg-linear-to-br ${accent} text-white shadow-lg shadow-slate-950/20`}>
+          {icon}
+        </div>
+        <div>
+          <p className="text-sm uppercase tracking-[0.24em] text-slate-400">{summary}</p>
+          <h3 className="mt-2 text-lg font-semibold text-white">{title}</h3>
+        </div>
       </div>
 
-      {/* Group Info */}
-      <h3 className="text-lg font-bold text-gray-800 mb-1">
-        {title}
-      </h3>
-      <p className="text-gray-500 text-sm">
-        {summary}
-      </p>
-    </div>
+      <div className="mt-6 flex items-center justify-between">
+        <span className="rounded-full bg-slate-800/90 px-3 py-1 text-sm text-slate-300">Budget</span>
+        <span className="text-sm font-semibold text-cyan-300">₹{budget.toLocaleString()}</span>
+      </div>
+    </button>
   );
 };
 

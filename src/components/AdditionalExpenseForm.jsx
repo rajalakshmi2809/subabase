@@ -1,75 +1,91 @@
 import { useState } from "react";
 
-const AdditionalExpenseForm = () => {
-  // State for form inputs (Beginner level state management)
+const AdditionalExpenseForm = ({ selectedGroup, onAddExpense }) => {
   const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
 
-  // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevents page reload
-    console.log("Expense Added:", { amount, description, date });
-    alert("Expense added successfully!");
-    
-    // Clear the form after submission
+    e.preventDefault();
+
+    if (!selectedGroup) {
+      return;
+    }
+
+    onAddExpense({
+      title: title.trim() || "New expense",
+      description: description.trim() || "No description",
+      amount: Number(amount),
+      date,
+    });
+
     setAmount("");
-    setDescription("");
+    setTitle("");
     setDate("");
+    setDescription("");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md">
-      {/* Amount Input */}
+    <form onSubmit={handleSubmit} className="grid gap-5">
       <div>
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Amount
-        </label>
-        <input
-          type="number"
-          placeholder="Enter amount (e.g., 500)"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
-          required
-        />
-      </div>
-
-      {/* Description Input */}
-      <div>
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Description
-        </label>
+        <label className="mb-2 block text-sm font-semibold text-slate-200">Expense name</label>
         <input
           type="text"
-          placeholder="What was this expense for?"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
+          placeholder="e.g. Transport, snacks, hotel"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full rounded-3xl border border-white/10 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
           required
         />
       </div>
 
-      {/* Date Input */}
       <div>
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Date
-        </label>
+        <label className="mb-2 block text-sm font-semibold text-slate-200">Amount</label>
         <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
+          type="number"
+          min="1"
+          placeholder="₹ 1,500"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          className="w-full rounded-3xl border border-white/10 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
           required
         />
       </div>
 
-      {/* Submit Button */}
-      <button 
-        type="submit" 
-        className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-2 transition-colors"
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label className="mb-2 block text-sm font-semibold text-slate-200">Date</label>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="w-full rounded-3xl border border-white/10 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+            required
+          />
+        </div>
+        <div>
+          <label className="mb-2 block text-sm font-semibold text-slate-200">Category</label>
+          <select
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full rounded-3xl border border-white/10 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+          >
+            <option value="">Select category</option>
+            <option value="Travel">Travel</option>
+            <option value="Food">Food</option>
+            <option value="Equipment">Equipment</option>
+            <option value="Hotel">Hotel</option>
+            <option value="Miscellaneous">Miscellaneous</option>
+          </select>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        className="inline-flex items-center justify-center rounded-3xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400"
       >
-        Add Expense
+        Add expense to {selectedGroup?.title || "group"}
       </button>
     </form>
   );
