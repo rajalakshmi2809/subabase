@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { FiBarChart2, FiMap, FiTrendingUp, FiUsers } from "react-icons/fi";
+import { FiBarChart2, FiBriefcase, FiMap, FiTrendingUp, FiUsers } from "react-icons/fi";
 import GroupCard from "./components/GroupCard";
 import AdditionalExpenseForm from "./components/AdditionalExpenseForm";
 import ExpenseSummaryModal from "./components/ExpenseSummaryModal";
@@ -26,6 +26,22 @@ const initialGroups = [
     summary: "Travel & Hotel",
     budget: 78000,
     accent: "from-emerald-500 to-teal-600",
+  },
+  {
+    id: "office",
+    icon: <FiBriefcase className="h-7 w-7" />,
+    title: "Office Event",
+    summary: "Catering & Supplies",
+    budget: 43000,
+    accent: "from-violet-500 to-fuchsia-600",
+  },
+  {
+    id: "marketing",
+    icon: <FiUsers className="h-7 w-7" />,
+    title: "Marketing Team",
+    summary: "Campaign & Ads",
+    budget: 62000,
+    accent: "from-orange-500 to-amber-600",
   },
 ];
 
@@ -61,6 +77,38 @@ const initialExpenses = [
     amount: 17600,
     date: "2026-05-07",
     description: "Round-trip tickets",
+  },
+  {
+    id: 5,
+    groupId: "office",
+    title: "Office snacks",
+    amount: 4200,
+    date: "2026-05-09",
+    description: "Refreshments for meeting",
+  },
+  {
+    id: 6,
+    groupId: "office",
+    title: "Decor items",
+    amount: 8200,
+    date: "2026-05-11",
+    description: "Event decorations and banners",
+  },
+  {
+    id: 7,
+    groupId: "marketing",
+    title: "Social ads",
+    amount: 15000,
+    date: "2026-05-08",
+    description: "Promoted post campaigns",
+  },
+  {
+    id: 8,
+    groupId: "marketing",
+    title: "Design assets",
+    amount: 7800,
+    date: "2026-05-13",
+    description: "Creative design and copy",
   },
 ];
 
